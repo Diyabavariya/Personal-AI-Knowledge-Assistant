@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal AI Assistant</title>
+
+    <!-- ✅ Flask static CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 8V4H8"/>
+                        <rect width="16" height="12" x="4" y="8" rx="2"/>
+                        <path d="M2 14h2"/>
+                        <path d="M20 14h2"/>
+                        <path d="M15 13v2"/>
+                        <path d="M9 13v2"/>
+                    </svg>
+                </div>
+                <h1>Personal AI Assistant</h1>
+            </div>
+
+            <!-- Reset -->
+            <form method="POST" action="/reset">
+                <button type="submit" class="btn btn-reset" id="resetBtn">
+                    Reset
+                </button>
+            </form>
+        </div>
+    </header>
+
+    <!-- Upload Section -->
+    <section class="upload-section">
+        <div class="upload-container">
+            <input type="file" id="fileInput" multiple accept=".pdf,.docx,.txt" hidden>
+
+            <div class="upload-area" id="uploadArea">
+                <p class="upload-text">Drop files here or <span class="upload-link">browse</span></p>
+                <p class="upload-hint">Supports PDF, DOCX, TXT</p>
+            </div>
+
+            <div class="file-list" id="fileList"></div>
+
+            <!-- Upload handled by JS -->
+            <button type="button" class="btn btn-upload" id="uploadBtn" disabled>
+                Upload Files
+            </button>
+        </div>
+    </section>
+
+    <!-- Chat -->
+    <main class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+            <div class="welcome-message">
+                <h2>Hello! How can I help you today?</h2>
+                <p>Upload documents or ask me anything to get started.</p>
+            </div>
+
+            <!-- Flask answer will appear after reload -->
+            {% if answer %}
+            <div class="message assistant">
+                <div class="message-bubble">
+                    {{ answer }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <!-- Input -->
+    <footer class="input-section">
+        <!-- ✅ NORMAL Flask form -->
+        <form class="input-form" method="POST" action="/">
+            <div class="input-wrapper">
+                <textarea
+                    name="question"
+                    id="questionInput"
+                    placeholder="Type your message..."
+                    rows="1"
+                    required
+                ></textarea>
+                <button type="submit" class="btn btn-send">
+                    Send
+                </button>
+            </div>
+        </form>
+    </footer>
+
+</div>
+
+<!-- Loading Overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Thinking...</p>
+    </div>
+</div>
+
+<!-- ✅ Flask static JS -->
+<script src="/static/script.js"></script>
+
+</body>
+</html>
